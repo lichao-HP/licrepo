@@ -1,0 +1,67 @@
+// (C) Copyright 2014-2015 Hewlett Packard Enterprise Development LP
+
+@import '~grommet/scss/hpe/index';
+@import '~grommet-index/scss/grommet-index/index';
+
+// TODO: explore moving to grommet-core
+.title {
+
+  // For HPELogo
+  // .logo-icon {
+  //   width: 116px;
+  //
+  //   &--inverse {
+  //     .logo-icon__text {
+  //       fill: $background-color;
+  //     }
+  //   }
+  // }
+
+  @include media-query(lap-and-up) {
+    .dashboard & .logo-icon {
+      @include animation('slide-logo 0.4s');
+
+      g {
+        transition: stroke-width $base-animation-duration ease-in-out;
+      }
+    }
+  }
+
+  [class*="background-color-index-"]:not([class*="background-color-index-light"]) & {
+    .logo-icon g {
+      stroke: $colored-icon-color;
+    }
+  }
+
+  &:hover {
+    .logo-icon g.paths {
+      stroke-width: 5px;
+    }
+  }
+}
+
+@include keyframes(slide-logo) {
+  0% {
+    transform: translateX(halve($inuit-base-spacing-unit));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.sidebar {
+  @include media-query(lap-and-up) {
+    @include animation('slide-sidebar 0.2s');
+  }
+}
+
+@include keyframes(slide-sidebar) {
+  0% {
+    width: 0px;
+  }
+
+  100% {
+    width: $sidebar-width;
+  }
+}

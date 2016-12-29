@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+- '5.0.0'
+sudo: false
+cache: false
+before_script:
+- npm install -g gulp
+- gem install scss_lint -v 0.38.0
+script:
+- npm run build
+after_success:
+- |
+  if [ "$TRAVIS_BRANCH" = "master" ]; then
+    git config credential.helper "store --file=.git/credentials"
+    echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+    git config --global user.name "Grommet Community Bot"
+    git config --global user.email "asouza@hp.com"
+    gulp release:heroku
+  fi
+env:
+  global:
+  - secure: WAZavNwNqnoqhekiOUyno17/08O6zwsPqijN8S+BqnKG9Da3+HK7qyqMw2qQcmMhUEKjAMxLlRPtF8pG3NPRbNgp/khHnMKE0/zLbg3Ku3zkkijIgJd3tiNNoQGvDu9HtGN13Wd+AvZe8XWq+qGHB9drrt0j5sCa3HjpFSfPhYkVDN3XOTFoUElOzNgz9ieGUXvP4xVj7d8Wv3qs65DaboHWdQTIekFzCK/aiDzmoIh3XsjPvMK/ORRJiFIJMrTXz0IbV+LrrSy7ZpIBnMedM+GWcL+0aB44kfOA1edP7SZmG9gxdUM+F/t4QYG62bPPMBEzJWyHImspW4LKlHfoLqJEv3jrDsvpsnBeqhY7aaWCnWasHyap0m94tBeMUT+tRR9cJpyMVti8DkkuPjAPieGF2Tx5wn3DU6Y31V3V2WVgJzBcyCbAuu+RbhBW9caWrtaVezXp1bFYhVQkeq7jlEqEUdKAuU8tJJr+zF9SspEJKd01f9m8hFfNJMk+mXS3AqGkZalddh6qAgqejy3NbZqnNM854+mn/YATLPI9S5n7w7USFnXZhA2brABx9d2uhIdGl0SKt2rg19v+zLhRWuecEzEaPe/fs/z1pJNYDqusoF0V96ovf6kcZuES/7gXyWct+Vf015DnJPDYSdyFk98gDGkfW1N6nbd8SiK1Vfw=
